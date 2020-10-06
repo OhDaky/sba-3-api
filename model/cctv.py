@@ -15,7 +15,7 @@ class CctvModel:
         print('----------- CCTV & POP ----------')
         cctv = self.get_cctv()
         pop = self.get_pop()
-        self.set_cctv_pop(self, pop, cctv)
+        self.set_cctv_pop(pop, cctv)
         
     def get_cctv(self):
         reader = self.reader
@@ -81,7 +81,7 @@ class CctvModel:
         reader = self.reader
         reader.context = os.path.join(baseurl,'saved_data')
         reader.fname = 'cctv_pop.csv'
-        cctv_pop = reader.read_csv(reader.new_file(), encoding='UTF-8', sep=',', index_col = '구별')
+        cctv_pop = pd.read_csv(reader.new_file(), encoding='UTF-8', sep=',', index_col = '구별')
         print(f'{cctv_pop.head()}')
         return cctv_pop  
 

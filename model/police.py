@@ -61,6 +61,14 @@ class Police:
         cctv_pop = cctv.get_cctv_pop()
 
         print(f'cctv_pop :: {cctv_pop.head()}')
+        police_norm['범죄'] = np.sum(police_norm[crime_rate_columns], axis=1)
+        police_norm['검거'] = np.sum(police_norm[crime_columns], axis=1)
+        print(f'police_norm_columns :: {police_norm.columns}')
+        reader = self.reader
+        reader.context = os.path.join(baseurl, 'saved_data')
+        reader.fname = 'police_norm.csv'
+
+        police_norm.to_csv(reader.new_file(), sep=',', encoding='UTF-8')
 
 
 if __name__ == '__main__':
