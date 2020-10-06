@@ -7,6 +7,7 @@ from model.crime import CrimeModel
 import pandas as pd
 import numpy as np 
 from sklearn import preprocessing
+from model.cctv import CctvModel
 '''
 Index(['Unnamed: 0', '관서명', '살인 발생', '살인 검거', '강도 발생', '강도 검거', '강간 발생',
        '강간 검거', '절도 발생', '절도 검거', '폭력 발생', '폭력 검거', '구별'],
@@ -49,7 +50,17 @@ class Police:
 
         x = police[crime_columns].values
 
-        min_max_scalar = preprocessing.MinMaxScaler()
+        min_max_scaler = preprocessing.MinMaxScaler()
+
+        x_scaled = min_max_scaler.fit_transform(x.astype(float))
+        
+        police_norm = pd.DataFrame(x_scaled, columns=crime_columns, index=police.index)
+        police_norm[crime_rate_columns] = police[crime_rate_columns]
+
+        cctv = CctvModel()
+        cctv_pop = cctv.get_cctv_pop()
+
+        print(f'cctv_pop :: {cctv_pop.head()}')
 
 
 if __name__ == '__main__':
