@@ -15,7 +15,7 @@ class CctvModel:
         print('----------- CCTV & POP ----------')
         cctv = self.get_cctv()
         pop = self.get_pop()
-        self.show_corrcoef(self, pop, cctv)
+        self.set_cctv_pop(self, pop, cctv)
         
     def get_cctv(self):
         reader = self.reader
@@ -61,8 +61,7 @@ class CctvModel:
                                    [-0.13607433  1.        ]]                        
     """
 
-    @staticmethod
-    def show_corrcoef(self, pop, cctv):
+    def set_cctv_pop(self, pop, cctv):
         pop['외국인비율'] = pop['외국인'] / pop['인구수'] * 100
         pop['고령자비율'] = pop['고령자'] / pop['인구수'] * 100
         cctv.drop(["2013년도 이전","2014년","2015년","2016년"], 1, inplace=True)
@@ -78,7 +77,13 @@ class CctvModel:
         reader.fname = 'cctv_pop.csv'
         cctv_pop.to_csv(reader.new_file())
 
-    
+    def get_cctv_pop(self):
+        reader = self.reader
+        reader.context = os.path.join(baseurl,'saved_data')
+        reader.fname = 'cctv_pop.csv'
+        cctv_pop = reader.read_csv(reader.new_file(), encoding='UTF-8', sep=',', index_col = '구별')
+        print(f'{cctv_pop.head()}')
+        return cctv_pop  
 
 
 if __name__ == '__main__':
