@@ -28,7 +28,7 @@ class FileReader:
         return pd.read_excel(self.new_file(), header=header, usecols=usecols)
 
     def create_gmaps(self):
-        return googlemaps.Client(key='')
+        return googlemaps.Client(key='') 
 
     def json_load(self): # 기능을 쓸 때는 dframe, 속성 기능 -객체 / 아닐땐 dframe 이라고 쓰지않는다
         return json.load(open(self.new_file()), encoding='UTF-8')
