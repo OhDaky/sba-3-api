@@ -21,6 +21,7 @@ class Police:
     def hook_process(self):
         print('----------- POLICE -------------')
         self.create_crime_rate()
+        self.get_police_norm()
     
     def create_crime_rate(self):
         crime = CrimeModel()
@@ -70,6 +71,14 @@ class Police:
 
         police_norm.to_csv(reader.new_file(), sep=',', encoding='UTF-8')
 
+    def get_police_norm(self):
+        reader = self.reader
+        reader.context = os.path.join(baseurl,'saved_data')
+        reader.fname = 'police_norm.csv'
+        reader.new_file()
+        police_norm = reader.csv_to_dframe()
+        print(f'{police_norm.head()}')
+        return police_norm
 
 if __name__ == '__main__':
     police = Police()
